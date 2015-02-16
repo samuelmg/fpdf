@@ -71,6 +71,8 @@ var $creator;            // creator
 var $AliasNbPages;       // alias for total number of pages
 var $PDFVersion;         // PDF version number
 
+var $isLongCell;         //Boolean to tell if it's a long cell
+
 /*******************************************************************************
 *                                                                              *
 *                               Public methods                                 *
@@ -387,6 +389,11 @@ function Footer()
 	// To be implemented in your own inherited class
 }
 
+function doIfLongCell()
+{
+    // To be implemented in your own inherited class
+}
+
 function PageNo()
 {
 	// Get current page number
@@ -616,6 +623,13 @@ function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=false, $link
 			$this->ws = 0;
 			$this->_out('0 Tw');
 		}
+		
+		// Do before adding a page if isLongCell is true
+		if($this->isLongCell === true)
+		{
+		    $this->doIfLongCell();
+		}
+		
 		$this->AddPage($this->CurOrientation,$this->CurPageSize);
 		$this->x = $x;
 		if($ws>0)
